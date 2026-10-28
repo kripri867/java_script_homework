@@ -1,68 +1,97 @@
-let firstName = 'tARAS'
-let lastName = 'shevchenko'
-let birthYear = '1994'
-let email = 'Taras.Shevchenko@Gmail.com'
-let isSubscribed = true
-let nickname
-let visits = 0
-const currentYear = 2026
+const orderObj = {
+	id: 1024,
+	customer: { firstName: 'John', lastName: 'Smith', age: 15 },
+	priceStr: '1099.99 грн',
+	quantityStr: '3',
+	deliveryDay: 3,
+	tempNote: 'службова нотатка, видалити перед відправкою',
+}
 
-console.log(typeof birthYear)
-let birthYearNumber = Number(birthYear)
-console.log(typeof birthYearNumber, birthYearNumber)
+orderObj.city = 'Київ'
+console.log(
+	`${orderObj.customer.firstName} ${orderObj.customer.lastName} from ${orderObj.city}`,
+)
 
-let age = currentYear - birthYearNumber
-let age10 = age + 10
-console.log(age, age10)
+console.log('tempNote в orderObj:', 'tempNote' in orderObj)
+delete orderObj.tempNote
+console.log('tempNote в orderObj:', 'tempNote' in orderObj)
 
-let normalizedFirstName =
-	firstName[0].toUpperCase() + firstName.slice(1).toLowerCase()
-let normalizedLastName =
-	lastName[0].toUpperCase() + lastName.slice(1).toLowerCase()
-console.log(normalizedFirstName, normalizedLastName)
+const backupOrder = structuredClone(orderObj)
+backupOrder.customer.firstName = 'Ann'
+console.log(
+	'Оригінал (orderObj.customer.firstName):',
+	orderObj.customer.firstName,
+)
+console.log(
+	'Копія (backupOrder.customer.firstName):',
+	backupOrder.customer.firstName,
+)
 
-let fullName = normalizedFirstName + ' ' + normalizedLastName
-console.log(fullName, fullName.length)
+const paidOrder = Object.assign({}, orderObj, { status: 'paid' })
+console.log('status у paidOrder:', paidOrder.status)
+console.log('status у orderObj:', orderObj.status)
 
-let atIndex = email.indexOf('@')
-console.log(atIndex)
+const prise = parseFloat(orderObj.priceStr)
+const quantity = Number(orderObj.quantityStr)
+const total = prise * quantity
+console.log('Price:', price)
+console.log('Quantity:', quantity)
+console.log('Total:', total)
 
-let login = email.slice(0, atIndex)
-let domain = email.slice(atIndex + 1).toLowerCase()
-console.log(login, domain)
+const age = orderObj.customer.age
+const discount = age < 18 ? 0.1 : age <= 60 ? 0 : 0.15
+const finalTotal = total * (1 - discount)
+console.log('Discount:', discount)
+console.log('Final Total:', finalTotal)
 
-let maskedEmail = login.slice(0, 2) + '***@' + domain
-console.log(maskedEmail)
+let deliveryPrice
+if (finalTotal < 500) {
+	deliveryPrice = 100
+} else if (finalTotal <= 1500) {
+	deliveryPrice = 50
+} else {
+	deliveryPrice = 0
+}
+console.log('Delivery Price:', deliveryPrice)
 
-let isAdult = age >= 18
-console.log(isAdult, typeof isAdult)
+let deliveryDayName
 
-console.log(isAdult && isSubscribed)
-console.log(isAdult || isSubscribed)
-console.log(!isSubscribed)
+switch (orderObj.deliveryDay) {
+	case 1:
+		deliveryDayName = 'Понеділок'
+		break
+	case 2:
+		deliveryDayName = 'Вівторок'
+		break
+	case 3:
+		deliveryDayName = 'Середа'
+		break
+	case 4:
+		deliveryDayName = 'Четвер'
+		break
+	case 5:
+		deliveryDayName = 'П’ятниця'
+		break
+	case 6:
+		deliveryDayName = 'Субота'
+		break
+	case 7:
+		deliveryDayName = 'Неділя'
+		break
+	default:
+		deliveryDayName = 'Невідомий день'
+}
+console.log('Delivery Day Name:', deliveryDayName)
 
-let displayName = nickname || fullName
-console.log(displayName)
+let bonusSum = 0
+for (let i = 1, limit = 20; i <= limit; i++) {
+	if (i % 3 === 0) {
+		continue
+	}
+	bonusSum += i
+	if (bonusSum > 50) {
+		break
+	}
+}
 
-let livedDays = Math.round(age * 365.25)
-console.log(livedDays)
-
-let confirmCode = Math.floor(Math.random() * 9000) + 1000
-console.log(confirmCode)
-
-let firstVisitResult = visits++
-console.log(firstVisitResult, visits)
-let secondVisitResult = ++visits
-console.log(secondVisitResult, visits)
-
-let userCard = `Користувач: ${fullName}
-Показувати як: ${displayName}
-Вік: ${age} (через 10 років — ${age10})
-Email: ${maskedEmail}
-Повнолітній: ${isAdult}
-Підписка: ${isSubscribed}
-Входів: ${visits}
-Прожито днів: ${livedDays}
-Код підтвердження: ${confirmCode}`;
-
-console.log(userCard);
+console.log('bonusSum →', bonusSum)
