@@ -9,14 +9,14 @@ console.log('#5. JavaScript homework example file')
  * якщо ні - то лічба триває
  */
 
-const counter = (function() {
-  let count = 0;
-  return function(n) {
-    if (typeof n === 'number') {
-      count = n
-    }
-    return count++
-  }
+const counter = (function () {
+	let count = 0
+	return function (n) {
+		if (Number.isFinite(n)) {
+			count = n
+		}
+		return count++
+	}
 })()
 
 // console.log(counter()) // 0
@@ -41,23 +41,23 @@ const counter = (function() {
  * counterFactory.increment() - збільшує значення лічильника на 1
  * counterFactory.decrement() - зменшує значення лічильника на 1
  */
-const counterFactory = (function() {
-  let count = 0;
-  return {
-    value: function(n) {
-      if (typeof n === 'number') {
-        count = n;
-      }
-      return count;
-    },
-    increment: function() {
-      count++;
-    },
-    decrement: function() {
-      count--;
-    }
-  };
-})()  
+const counterFactory = (function () {
+	let count = 0
+	return {
+		value: function (n) {
+			if (Number.isFinite(n)) {
+				count = n
+			}
+			return count
+		},
+		increment: function () {
+			count++
+		},
+		decrement: function () {
+			count--
+		},
+	}
+})()
 
 // const counterFactory = function () {}
 
@@ -98,15 +98,14 @@ const counterFactory = (function() {
 // console.log(myPow(2, 0, myPrint)) // 2^0=1
 // console.log(myPow(2, -2, myPrint)) // 2^-2=0.25
 
-
 /*
  * #4
  * Створіть функцію myMax(arr), яка як параметр приймає
  * довільний числовий масив і повертає максимальне число з переданого їй масиву.
  * У реалізації функції має бути застосовано метод Math.max() і apply().
  */
-const list = [ 12, 23, 100, 34, 56, 9, 233 ]
-const myMax = ( arr ) => Math.max.apply(null, arr)
+const list = [12, 23, 100, 34, 56, 9, 233]
+const myMax = (arr) => Math.max.apply(null, arr)
 
 // const list = [12, 23, 100, 34, 56, 9, 233]
 // const myMax = () => {}
@@ -118,7 +117,7 @@ const myMax = ( arr ) => Math.max.apply(null, arr)
  *
  * Створіть функцію myMul(a, b), яка буде множити числа а і b, повертаючи результат.
  */
-const myMul = (a, b) => a * b 
+const myMul = (a, b) => a * b
 
 // const myMul = () => {}
 
@@ -127,7 +126,7 @@ const myMul = (a, b) => a * b
  * Використовувати множення або інші математичні операції всередині функції - заборонено, тільки bind() і myMul().
  * Функція повертає результат обчислення.
  */
-const myDouble = myMul.bind (null, 2)
+const myDouble = myMul.bind(null, 2)
 // const myDouble
 
 // console.log(myDouble(3)) // = myMul(2, 3) = 6
@@ -135,7 +134,7 @@ const myDouble = myMul.bind (null, 2)
 // console.log(myDouble(5)) // = myMul(2, 5) = 10
 
 // Аналогічним чином створюємо функцію myTriple(n), яка потроює параметр, що приймає, повертаючи результат.
-const myTriple = myMul.bind (null, 3)
+const myTriple = myMul.bind(null, 3)
 // const myTriple
 
 // console.log(myTriple(3)) // = myMul(3, 3) = 9
