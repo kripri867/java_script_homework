@@ -45,22 +45,21 @@ const counter = startCounter()
  */
 function counter2() {
   let count = 0
-  return {
-    value (n){
+  return{
+    value (n) {
       if (Number.isFinite(n)) {
         count = n
       }
       return count
     },
     increment () {
-      count++
+      count ++
     },
     decrement () {
-      count--
+      count --
     }
   }
 }
-
 const counterFactory = counter2()
 
 // console.log(counterFactory.value()) // 0
@@ -91,6 +90,20 @@ const counterFactory = counter2()
  * console.log(myPow(2, 0, myPrint))  // 2^0=1
  * console.log(myPow(2, -2, myPrint)) // 2^-2=0.25
  */
+const myPrint = (a, b, res) => `${a}^${b}=${res}`
+
+const myPow = (a, b, myPrint) => {
+  const pow = (n) => {
+    if (n === 0) return 1
+    return a * pow(n - 1)
+  }
+
+  //https://uk.javascript.info/recursion- вот тут я брал сведения про рекурсию. НЕ ИИ. 
+  const res = b >= 0 ? pow(b) : 1 / pow(-b)
+
+  return myPrint(a, b, res)
+}
+
 
 // const myPrint = () => {}
 // const myPow = () => {}
