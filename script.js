@@ -9,16 +9,18 @@ console.log('#5. JavaScript homework example file')
  * якщо ні - то лічба триває
  */
 
-const counter = (function () {
-	let count = 0
+function startCounter(start = 0) {
+	let count = start
+
 	return function (n) {
 		if (Number.isFinite(n)) {
 			count = n
+			if (n === 0) return 0
 		}
 		return count++
 	}
-})()
-
+}
+const counter = startCounter()
 // console.log(counter()) // 0
 // console.log(counter()) // 1
 // console.log(counter(100)) // 100
@@ -41,25 +43,25 @@ const counter = (function () {
  * counterFactory.increment() - збільшує значення лічильника на 1
  * counterFactory.decrement() - зменшує значення лічильника на 1
  */
-const counterFactory = (function () {
-	let count = 0
-	return {
-		value: function (n) {
-			if (Number.isFinite(n)) {
-				count = n
-			}
-			return count
-		},
-		increment: function () {
-			count++
-		},
-		decrement: function () {
-			count--
-		},
-	}
-})()
+function counter2() {
+  let count = 0
+  return {
+    value (n){
+      if (Number.isFinite(n)) {
+        count = n
+      }
+      return count
+    },
+    increment () {
+      count++
+    },
+    decrement () {
+      count--
+    }
+  }
+}
 
-// const counterFactory = function () {}
+const counterFactory = counter2()
 
 // console.log(counterFactory.value()) // 0
 // counterFactory.increment()
