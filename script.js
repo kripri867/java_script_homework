@@ -15,9 +15,8 @@ console.log('#6. JavaScript homework example file')
  */
 
 class CalorieCalculator {
-  constructor() {
-   this.products = new Map()
-  }
+  products = new Map()
+
   addProduct(name, calories) {
     this.products.set(name, calories)
   }
@@ -27,7 +26,8 @@ class CalorieCalculator {
       return 'Product not found'
     }
     return this.products.get(name)
-  } 
+  }
+
   removeProduct(name) {
     this.products.delete(name)
   }
@@ -59,9 +59,8 @@ class CalorieCalculator {
  */
 
 class UniqueUsernames {
-  constructor() {
-    this.usernames = new Set()
-  }
+ usernames = new Set()
+  
 
   addUser(username) {
     this.usernames.add(username)
@@ -81,7 +80,7 @@ class UniqueUsernames {
 // uniqueUsernames.addUser('john_doe')
 // uniqueUsernames.addUser('jane_doe')
 // uniqueUsernames.addUser('john_doe') // Ця дія не змінить набір, оскільки 'john_doe' вже існує
-//
+
 // console.log(`Існує 'john_doe': ${uniqueUsernames.exists('john_doe')}`) // true
 // console.log(`Кількість унікальних імен: ${uniqueUsernames.count()}`) // 2
 
