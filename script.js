@@ -15,22 +15,21 @@ console.log('#6. JavaScript homework example file')
  */
 
 class CalorieCalculator {
-  constructor() {
-   this.products = new Map()
-  }
-  addProduct(name, calories) {
-    this.products.set(name, calories)
-  }
+	products = new Map()
 
-  getProductCalories(name) {
-    if (!this.products.has(name)) {
-      return 'Product not found'
-    }
-    return this.products.get(name)
-  } 
-  removeProduct(name) {
-    this.products.delete(name)
-  }
+	addProduct(name, calories) {
+		this.products.set(name, calories)
+	}
+
+	getProductCalories(name) {
+		if (!this.products.has(name)) {
+			return 'Product not found'
+		}
+		return this.products.get(name)
+	}
+	removeProduct(name) {
+		this.products.delete(name)
+	}
 }
 
 // Демонстрація використання
@@ -59,21 +58,19 @@ class CalorieCalculator {
  */
 
 class UniqueUsernames {
-  constructor() {
-    this.usernames = new Set()
-  }
+	usernames = new Set()
 
-  addUser(username) {
-    this.usernames.add(username)
-  }
+	addUser(username) {
+		this.usernames.add(username)
+	}
 
-  exists(username) {
-    return this.usernames.has(username)
-  }
+	exists(username) {
+		return this.usernames.has(username)
+	}
 
-  count() {
-    return this.usernames.size
-  }
+	count() {
+		return this.usernames.size
+	}
 }
 
 // Демонстрація використання
