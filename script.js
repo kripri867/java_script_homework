@@ -1,92 +1,135 @@
-console.log('#9. JavaScript homework example file')
+const slider = document.querySelector('#slider');
+const slidesItems = Array.from(slider.children);
+const btnNext = document.querySelector('#btnNext');
+const btnPrev = document.querySelector('#btnPrev');
+const btnPause = document.querySelector('#btnPause');
 
-/*
- * #1
- *
- * Задача: Відстежування кліку на кнопку та виведення повідомлення
- * Мета: Розробити функцію, яка призначає обробник події кліку на кнопку з певним ID і виводить у консоль заздалегідь визначене повідомлення при кожному кліку на кнопку.
- *
- * Вимоги:
- * 1. Функція має приймати два параметри:
- *    - buttonId (рядок) - ID кнопки, на яку потрібно встановити обробник події.
- *    - message (рядок) - повідомлення, яке буде виводитись у консоль при кліку на кнопку.
- * 2. Функція має знайти кнопку за допомогою buttonId і призначити їй обробник події кліку.
- * 3. При кліку на кнопку у консоль має виводитись задане message.
- * 4. Функція має бути експортована для подальшого використання і тестування.
- *
- */
+const autoplayDelay = 3000;
+let isPaused = false;
+let autoplayId = null;
 
-function handleButtonClick(buttonId, message) {
-  const button = document.getElementById(buttonId);
-  if (button) {
-    button.addEventListener('click', () => {
-      console.log(message);
-    });
+function startAutoplay() {
+  stopAutoplay();
+  if (isPaused) return;
+  autoplayId = setInterval(() => {
+    btnNext.click();
+  }, autoplayDelay);
+}
+
+function stopAutoplay() {
+  if (autoplayId !== null) {
+    clearInterval(autoplayId);
+    autoplayId = null;
   }
 }
 
+slidesItems.forEach((slide, index) => {
+  if (index !== 0) slide.classList.add('hidden');
 
+  slide.dataset.index = index;
+  slidesItems[0].setAttribute('data-active', '');
 
-// Демонстрація використання функції (припустимо, що HTML містить кнопку з ID 'myButton')
-handleButtonClick('myButton', 'Button clicked!');
+  slide.addEventListener('click', function () {
+    slide.classList.add('hidden');
+    slide.removeAttribute('data-active');
 
-/*
- * #2
- *
- * Задача: Розробка функції відстеження позиції курсору миші
- * Мета: Створити функцію trackMousePosition, яка встановлює обробник події для відстеження руху миші по документу та виводить в консоль координати курсору миші (X та Y).
- *
- * Вимоги до реалізації:
- * 1. Функціональність: Функція має відслідковувати рух миші по документу. При кожному русі миші функція має виводити в консоль координати clientX та clientY, які представляють позицію курсору відносно вікна переглядача.
- * 2. Реєстрація обробника події: Функція має використовувати document.addEventListener для реєстрації обробника події mousemove.
- * 3. Вивід даних: При спрацьовуванні події mousemove, функція має виводити рядок у форматі `"Mouse X: [X], Mouse Y: [Y]"`, де `[X]` та `[Y]` - це відповідні координати курсору миші.
- *
- */
+    const nextSlideIndex = index + 1 === slidesItems.length ? 0 : index + 1;
 
-function trackMousePosition() {
-  document.addEventListener('mousemove', (event) => {
-    console.log(`Mouse X: ${event.clientX}, Mouse Y: ${event.clientY}`);
+    const nextSlide = slider.querySelector(`[data-index="${nextSlideIndex}"]`);
+    nextSlide.classList.remove('hidden');
+    nextSlide.setAttribute('data-active', '');
+
+    startAutoplay();
   });
-}
+});
 
-// console.log(trackMousePosition())
+btnNext.onclick = function () {
+  const currentSlide = slider.querySelector('[data-active]');
+  const currentSlideIndex = +currentSlide.dataset.index;
+  currentSlide.classList.add('hidden');
+  currentSlide.removeAttribute('data-active');
+  const nextSlideIndex = currentSlideIndex + 1 === slidesItems.length ? 0 : currentSlideIndex + 1;
+  const nextSlide = slider.querySelector(`[data-index="${nextSlideIndex}"]`);
+  nextSlide.classList.remove('hidden');
+  nextSlide.setAttribute('data-active', '');
 
-/*
- * #3
- *
- * Задача: Реалізація делегування подій для відстеження кліків на елементах списку
- * Мета: Створити функцію setupEventDelegation, яка дозволить встановити обробник подій на весь список, замість окремих елементів `<li>`. Функція повинна відстежувати кліки на елементах <li> у межах заданого списку і логувати текст "Item clicked: [Текст Елемента]", де "[Текст Елемента]" - це текст клікнутого елемента `<li>`, в консоль.
- *
- * Вимоги до реалізації:
- * 1. Вибір елемента списку: Функція повинна приймати селектор CSS як аргумент, що вказує на елемент списку `<ul>` або `<ol>`, до якого буде застосовано делегування подій.
- * 2. Встановлення обробника подій: Використовуючи метод addEventListener, функція має додати обробник для події `click` на весь список. Обробник повинен спрацьовувати при кліку на будь-який з елементів `<li>` у цьому списку.
- * 3. Логування кліків: Коли елемент <li> клікнуто, функція має вивести у консоль повідомлення у форматі "Item clicked: [Текст Елемента]", де "[Текст Елемента]" має бути текстом клікнутого елемента <li>. Текст елемента має бути обрізаним trim(), щоб видалити зайві пробіли на початку та в кінці.
- *
- */
+  startAutoplay();
+};
 
-// function createTestList() {
-//   document.body.innerHTML = `
-//     <ul id="testList">
-//       <li>Item 1</li>
-//       <li>Item 2</li>
-//       <li>Item 3</li>
-//     </ul>
-//     `
-// }
-// createTestList()
+btnPrev.onclick = function () {
+  const currentSlide = slider.querySelector('[data-active]');
+  const currentSlideIndex = +currentSlide.dataset.index;
+  currentSlide.classList.add('hidden');
+  currentSlide.removeAttribute('data-active');
+  const prevSlideIndex = currentSlideIndex === 0 ? slidesItems.length - 1 : currentSlideIndex - 1;
+  const prevSlide = slider.querySelector(`[data-index="${prevSlideIndex}"]`);
+  prevSlide.classList.remove('hidden');
+  prevSlide.setAttribute('data-active', '');
 
-function setupEventDelegation(selector) {
-  const list = document.querySelector(selector);
-  if (list) {
-    list.addEventListener('click', (event) => {
-      if (event.target.tagName === 'LI') {
-        console.log(`Item clicked: ${event.target.textContent.trim()}`);
-      }
-    });
+  startAutoplay();
+};
+
+btnPause.onclick = function () {
+  isPaused = !isPaused;
+  if (isPaused) {
+    stopAutoplay();
+    btnPause.textContent = 'Продолжить';
+  } else {
+    btnPause.textContent = 'Пауза';
+    startAutoplay();
   }
-}
+};
 
-setupEventDelegation('#testList')
+let startX = 0;
+let startY = 0;
+let isSwiping = false;
+let didSwipe = false;
+const swipeThreshold = 50;
 
-// Експорт функції для використання та тестування
-export { handleButtonClick, trackMousePosition, setupEventDelegation }
+slider.addEventListener('pointerdown', (e) => {
+  startX = e.clientX;
+  startY = e.clientY;
+  isSwiping = true;
+  didSwipe = false;
+});
+
+slider.addEventListener('pointerup', (e) => {
+  if (!isSwiping) return;
+  isSwiping = false;
+
+  const deltaX = e.clientX - startX;
+  const deltaY = e.clientY - startY;
+
+  if (Math.abs(deltaX) > swipeThreshold && Math.abs(deltaX) > Math.abs(deltaY)) {
+    didSwipe = true;
+    if (deltaX < 0) {
+      btnNext.click();
+    } else {
+      btnPrev.click();
+    }
+  }
+});
+
+slider.addEventListener('pointercancel', () => {
+  isSwiping = false;
+  didSwipe = false;
+});
+
+slider.addEventListener(
+  'click',
+  (e) => {
+    if (didSwipe) {
+      e.stopImmediatePropagation();
+      didSwipe = false;
+    }
+  },
+  true
+);
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowLeft') {
+    btnPrev.click();
+  } else if (e.key === 'ArrowRight') {
+    btnNext.click();
+  }
+});
+startAutoplay();

@@ -1,18 +1,50 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Js</title>
-</head>
-<body>
-  <h1 style="background-color: blueviolet; color: coral; display: flex; align-items: center; justify-content: center; padding: 10px 10px; ">JS HOMEWORK</h1>
-  <button id="myButton">Натисни мене</button>
-  <ul id="testList">
-    <li>fghjk</li>
-    <li>asdfg</li>
-    <li>zxcvb</li>
-  </ul>
-  <script type="module" src="./script.js"></script>
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			http-equiv="X-UA-Compatible"
+			content="IE=edge"
+		/>
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0"
+		/>
+		<title>Cats slider - 01</title>
+		<link
+			rel="stylesheet"
+			href="style.css"
+		/>
+	</head>
+	<body>
+		<header>
+			<h1>Слайдер на JavaScript</h1>
+		</header>
+
+		<div
+			class="slider"
+			id="slider"
+		>
+			<img
+				src="./img/01.jpg"
+				alt="Slide 01"
+			/>
+			<img
+				src="./img/02.jpg"
+				alt="Slide 02"
+			/>
+			<img
+				src="./img/03.jpg"
+				alt="Slide 03"
+			/>
+		</div>
+
+		<div class="controls">
+			<button id="btnPrev">Назад</button>
+			<button id="btnPause">Пауза</button>
+			<button id="btnNext">уперед</button>
+		</div>
+
+		<script src="script.js"></script>
+	</body>
 </html>
