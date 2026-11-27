@@ -1,57 +1,204 @@
-* {
-	box-sizing: border-box;
-	margin: 0;
-	padding: 0;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-header {
-	margin-bottom: 30px;
-	padding: 15px 0;
-	background-color: rgb(49, 57, 65);
-	font-family: sans-serif;
-	text-align: center;
-	color: #fff;
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background-color: #f4f6f8;
+  color: #18202c;
 }
 
-.logo {
-	font-weight: 600;
-	font-size: 18px;
-	margin-bottom: 10px;
+.page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 20px;
 }
 
-h1 {
-	font-size: 24px;
+.demo {
+  width: 100%;
+  max-width: 620px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
 }
 
-.controls {
-	margin: 0 auto;
-	padding: 15px 0;
-	text-align: center;
+.range-slider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
 }
 
-button {
-	font-size: 18px;
-	padding: 0.2rem 1rem;
-	cursor: pointer;
+.range-slider__btn {
+  flex: 0 0 32px;
+  height: 32px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background-color: #ffffff;
+  color: #18202c;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 
-.slider {
-	margin: 0 auto;
-	width: 800px;
-	height: 450px;
-	background-color: rgb(182, 203, 222);
+.range-slider__btn:hover {
+  background-color: #e8f1ff;
+  border-color: #1677ff;
+  color: #1677ff;
 }
 
-.hidden {
-	display: none;
-}
-
-
-.slider {
-  touch-action: pan-y;
+.range-slider__control {
+  position: relative;
+  flex: 1 1 auto;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  touch-action: none;
   user-select: none;
 }
 
-.slider img {
-  -webkit-user-drag: none;
+.range-slider__track {
+  position: relative;
+  width: 100%;
+  height: 6px;
+  border-radius: 999px;
+  background-color: #d6dde6;
+  overflow: hidden;
+}
+
+.range-slider__progress {
+  width: 0%;
+  height: 100%;
+  background-color: #1677ff;
+  border-radius: 999px;
+}
+
+.range-slider__indicators {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 22px;
+  height: 8px;
+  pointer-events: none;
+}
+
+.range-slider__indicator {
+  position: absolute;
+  top: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #94a3b8;
+  transform: translateX(-50%);
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+.range-slider__indicator.is-active {
+  background-color: #1677ff;
+  transform: translateX(-50%) scale(1.25);
+}
+
+.range-slider__thumb {
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #1677ff;
+  border: 2px solid #ffffff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  transform: translate(-50%, -50%);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  z-index: 2;
+}
+
+.range-slider__control:hover .range-slider__thumb,
+.range-slider__control.is-dragging .range-slider__thumb,
+.range-slider.is-hovered .range-slider__thumb {
+  transform: translate(-50%, -50%) scale(1.12);
+  box-shadow: 0 2px 8px rgba(22, 119, 255, 0.45);
+}
+
+.range-slider__input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 3;
+}
+
+.range-slider__value-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.range-slider__value {
+  width: 68px;
+  padding: 4px 8px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  background-color: #ffffff;
+  color: #18202c;
+  text-align: right;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  -moz-appearance: textfield;
+}
+
+.range-slider__value::-webkit-outer-spin-button,
+.range-slider__value::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.range-slider__value:focus {
+  outline: none;
+  border-color: #1677ff;
+  box-shadow: 0 0 0 2px rgba(22, 119, 255, 0.2);
+}
+
+.range-slider__unit {
+  font-size: 14px;
+  font-weight: 600;
+  color: #475569;
+}
+
+@media (max-width: 480px) {
+  .range-slider {
+    gap: 8px;
+  }
+
+  .range-slider__btn {
+    flex: 0 0 28px;
+    height: 28px;
+    font-size: 14px;
+  }
+
+  .range-slider__thumb {
+    width: 24px;
+    height: 24px;
+  }
+
+  .range-slider__value {
+    width: 58px;
+    font-size: 14px;
+  }
+
+  .range-slider__unit {
+    font-size: 13px;
+  }
 }
